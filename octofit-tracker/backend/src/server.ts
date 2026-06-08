@@ -19,7 +19,7 @@ app.get('/health', (_req, res) => {
   res.json({ status: 'ok' })
 })
 
-app.get('/api/users/', (_req, res) => {
+app.get('/api/users', (_req, res) => {
   void UserModel.find().sort({ createdAt: -1 }).then((users) => {
     res.json(users)
   }).catch((error: unknown) => {
@@ -27,7 +27,7 @@ app.get('/api/users/', (_req, res) => {
   })
 })
 
-app.get('/api/teams/', (_req, res) => {
+app.get('/api/teams', (_req, res) => {
   void TeamModel.find().sort({ points: -1 }).then((teams) => {
     res.json(teams)
   }).catch((error: unknown) => {
@@ -35,7 +35,7 @@ app.get('/api/teams/', (_req, res) => {
   })
 })
 
-app.get('/api/activities/', (_req, res) => {
+app.get('/api/activities', (_req, res) => {
   void ActivityModel.find().sort({ activityDate: -1 }).then((activities) => {
     res.json(activities)
   }).catch((error: unknown) => {
@@ -43,7 +43,7 @@ app.get('/api/activities/', (_req, res) => {
   })
 })
 
-app.get('/api/leaderboard/', (_req, res) => {
+app.get('/api/leaderboard', (_req, res) => {
   void LeaderboardModel.find().sort({ rank: 1 }).then((entries) => {
     res.json(entries)
   }).catch((error: unknown) => {
@@ -51,7 +51,7 @@ app.get('/api/leaderboard/', (_req, res) => {
   })
 })
 
-app.get('/api/workouts/', (_req, res) => {
+app.get('/api/workouts', (_req, res) => {
   void WorkoutModel.find().sort({ difficulty: 1, durationMinutes: 1 }).then((workouts) => {
     res.json(workouts)
   }).catch((error: unknown) => {

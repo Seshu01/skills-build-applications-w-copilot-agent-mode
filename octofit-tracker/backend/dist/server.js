@@ -20,35 +20,35 @@ app.use(express_1.default.json());
 app.get('/health', (_req, res) => {
     res.json({ status: 'ok' });
 });
-app.get('/api/users/', (_req, res) => {
+app.get('/api/users', (_req, res) => {
     void user_1.UserModel.find().sort({ createdAt: -1 }).then((users) => {
         res.json(users);
     }).catch((error) => {
         res.status(500).json({ message: 'Failed to fetch users', error });
     });
 });
-app.get('/api/teams/', (_req, res) => {
+app.get('/api/teams', (_req, res) => {
     void team_1.TeamModel.find().sort({ points: -1 }).then((teams) => {
         res.json(teams);
     }).catch((error) => {
         res.status(500).json({ message: 'Failed to fetch teams', error });
     });
 });
-app.get('/api/activities/', (_req, res) => {
+app.get('/api/activities', (_req, res) => {
     void activity_1.ActivityModel.find().sort({ activityDate: -1 }).then((activities) => {
         res.json(activities);
     }).catch((error) => {
         res.status(500).json({ message: 'Failed to fetch activities', error });
     });
 });
-app.get('/api/leaderboard/', (_req, res) => {
+app.get('/api/leaderboard', (_req, res) => {
     void leaderboard_1.LeaderboardModel.find().sort({ rank: 1 }).then((entries) => {
         res.json(entries);
     }).catch((error) => {
         res.status(500).json({ message: 'Failed to fetch leaderboard entries', error });
     });
 });
-app.get('/api/workouts/', (_req, res) => {
+app.get('/api/workouts', (_req, res) => {
     void workout_1.WorkoutModel.find().sort({ difficulty: 1, durationMinutes: 1 }).then((workouts) => {
         res.json(workouts);
     }).catch((error) => {
