@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react'
-import { fetchCollection } from '../lib/api'
+import { getApiBaseUrl, normalizeCollectionResponse } from '../lib/api'
 
 function Workouts() {
   const [workouts, setWorkouts] = useState([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const workoutsEndpoint = `${getApiBaseUrl()}/workouts/`
 
   useEffect(() => {
     const loadWorkouts = async () => {
       try {
-        const result = await fetchCollection('workouts')
-        setWorkouts(result.items)
+        const response = await fetch(workoutsEndpoint)
+
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`)
+        }
+
+        const payload = await response.json()
+        setWorkouts(normalizeCollectionResponse(payload))
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : 'Failed to load workouts')
       } finally {
@@ -19,7 +26,7 @@ function Workouts() {
     }
 
     void loadWorkouts()
-  }, [])
+  }, [workoutsEndpoint])
 
   if (isLoading) {
     return <p className="status">Loading workouts...</p>

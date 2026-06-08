@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react'
-import { fetchCollection } from '../lib/api'
+import { getApiBaseUrl, normalizeCollectionResponse } from '../lib/api'
 
 function Users() {
   const [users, setUsers] = useState([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const usersEndpoint = `${getApiBaseUrl()}/users/`
 
   useEffect(() => {
     const loadUsers = async () => {
       try {
-        const result = await fetchCollection('users')
-        setUsers(result.items)
+        const response = await fetch(usersEndpoint)
+
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`)
+        }
+
+        const payload = await response.json()
+        setUsers(normalizeCollectionResponse(payload))
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : 'Failed to load users')
       } finally {
@@ -19,7 +26,7 @@ function Users() {
     }
 
     void loadUsers()
-  }, [])
+  }, [usersEndpoint])
 
   if (isLoading) {
     return <p className="status">Loading users...</p>

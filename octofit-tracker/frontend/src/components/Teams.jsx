@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react'
-import { fetchCollection } from '../lib/api'
+import { getApiBaseUrl, normalizeCollectionResponse } from '../lib/api'
 
 function Teams() {
   const [teams, setTeams] = useState([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
+  const teamsEndpoint = `${getApiBaseUrl()}/teams/`
 
   useEffect(() => {
     const loadTeams = async () => {
       try {
-        const result = await fetchCollection('teams')
-        setTeams(result.items)
+        const response = await fetch(teamsEndpoint)
+
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`)
+        }
+
+        const payload = await response.json()
+        setTeams(normalizeCollectionResponse(payload))
       } catch (loadError) {
         setError(loadError instanceof Error ? loadError.message : 'Failed to load teams')
       } finally {
@@ -19,7 +26,7 @@ function Teams() {
     }
 
     void loadTeams()
-  }, [])
+  }, [teamsEndpoint])
 
   if (isLoading) {
     return <p className="status">Loading teams...</p>
