@@ -1,5 +1,10 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import { ActivityModel } from './models/activity'
+import { LeaderboardModel } from './models/leaderboard'
+import { TeamModel } from './models/team'
+import { UserModel } from './models/user'
+import { WorkoutModel } from './models/workout'
 
 const app = express()
 const port = 8000
@@ -16,23 +21,43 @@ app.get('/health', (_req, res) => {
 })
 
 app.get('/api/users/', (_req, res) => {
-  res.json({ message: 'Users route is ready' })
+  void UserModel.find().sort({ createdAt: -1 }).then((users) => {
+    res.json(users)
+  }).catch((error: unknown) => {
+    res.status(500).json({ message: 'Failed to fetch users', error })
+  })
 })
 
 app.get('/api/teams/', (_req, res) => {
-  res.json({ message: 'Teams route is ready' })
+  void TeamModel.find().sort({ points: -1 }).then((teams) => {
+    res.json(teams)
+  }).catch((error: unknown) => {
+    res.status(500).json({ message: 'Failed to fetch teams', error })
+  })
 })
 
 app.get('/api/activities/', (_req, res) => {
-  res.json({ message: 'Activities route is ready' })
+  void ActivityModel.find().sort({ activityDate: -1 }).then((activities) => {
+    res.json(activities)
+  }).catch((error: unknown) => {
+    res.status(500).json({ message: 'Failed to fetch activities', error })
+  })
 })
 
 app.get('/api/leaderboard/', (_req, res) => {
-  res.json({ message: 'Leaderboard route is ready' })
+  void LeaderboardModel.find().sort({ rank: 1 }).then((entries) => {
+    res.json(entries)
+  }).catch((error: unknown) => {
+    res.status(500).json({ message: 'Failed to fetch leaderboard entries', error })
+  })
 })
 
 app.get('/api/workouts/', (_req, res) => {
-  res.json({ message: 'Workouts route is ready' })
+  void WorkoutModel.find().sort({ difficulty: 1, durationMinutes: 1 }).then((workouts) => {
+    res.json(workouts)
+  }).catch((error: unknown) => {
+    res.status(500).json({ message: 'Failed to fetch workouts', error })
+  })
 })
 
 app.get('/api/config', (_req, res) => {
