@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getApiBaseUrl, normalizeCollectionResponse } from '../lib/api'
+import { normalizeCollectionResponse } from '../lib/api'
 
 function Workouts() {
   const [workouts, setWorkouts] = useState([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const workoutsEndpoint = `${getApiBaseUrl()}/workouts/`
+  const codespaceName = (import.meta.env.VITE_CODESPACE_NAME ?? '').trim()
+  const workoutsEndpoint = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/workouts/`
+    : 'http://localhost:8000/api/workouts/'
 
   useEffect(() => {
     const loadWorkouts = async () => {

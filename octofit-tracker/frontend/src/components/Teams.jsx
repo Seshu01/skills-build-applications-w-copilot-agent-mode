@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getApiBaseUrl, normalizeCollectionResponse } from '../lib/api'
+import { normalizeCollectionResponse } from '../lib/api'
 
 function Teams() {
   const [teams, setTeams] = useState([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const teamsEndpoint = `${getApiBaseUrl()}/teams/`
+  const codespaceName = (import.meta.env.VITE_CODESPACE_NAME ?? '').trim()
+  const teamsEndpoint = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/teams/`
+    : 'http://localhost:8000/api/teams/'
 
   useEffect(() => {
     const loadTeams = async () => {

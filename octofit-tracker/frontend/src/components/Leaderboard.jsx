@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getApiBaseUrl, normalizeCollectionResponse } from '../lib/api'
+import { normalizeCollectionResponse } from '../lib/api'
 
 function Leaderboard() {
   const [entries, setEntries] = useState([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const leaderboardEndpoint = `${getApiBaseUrl()}/leaderboard/`
+  const codespaceName = (import.meta.env.VITE_CODESPACE_NAME ?? '').trim()
+  const leaderboardEndpoint = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/leaderboard/`
+    : 'http://localhost:8000/api/leaderboard/'
 
   useEffect(() => {
     const loadLeaderboard = async () => {

@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getApiBaseUrl, normalizeCollectionResponse } from '../lib/api'
+import { normalizeCollectionResponse } from '../lib/api'
 
 function Users() {
   const [users, setUsers] = useState([])
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(true)
-  const usersEndpoint = `${getApiBaseUrl()}/users/`
+  const codespaceName = (import.meta.env.VITE_CODESPACE_NAME ?? '').trim()
+  const usersEndpoint = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev/api/users/`
+    : 'http://localhost:8000/api/users/'
 
   useEffect(() => {
     const loadUsers = async () => {
