@@ -1,5 +1,5 @@
 import express from 'express'
-import mongoose from 'mongoose'
+import { connectDatabase } from './config/database'
 import { ActivityModel } from './models/activity'
 import { LeaderboardModel } from './models/leaderboard'
 import { TeamModel } from './models/team'
@@ -8,7 +8,6 @@ import { WorkoutModel } from './models/workout'
 
 const app = express()
 const port = 8000
-const mongoUri = process.env.MONGODB_URI ?? 'mongodb://127.0.0.1:27017/octofit_db'
 const codespaceName = process.env.CODESPACE_NAME
 const baseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
@@ -69,7 +68,7 @@ app.get('/api/config', (_req, res) => {
 
 const start = async (): Promise<void> => {
   try {
-    await mongoose.connect(mongoUri)
+    await connectDatabase()
     app.listen(port, () => {
       console.log(`OctoFit backend running on port ${port}`)
       console.log(`OctoFit API base URL: ${baseUrl}`)
