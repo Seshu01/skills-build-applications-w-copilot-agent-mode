@@ -1,0 +1,114 @@
+.app-shell {
+  width: min(1100px, 100% - 2rem);
+  margin: 2rem auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem 1.4rem;
+  border-radius: 1rem;
+  background: linear-gradient(140deg, #0d2d45, #2a6d8f);
+  color: #f7fbff;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.16rem;
+  font-size: 0.78rem;
+  margin: 0;
+  opacity: 0.8;
+}
+
+.lead {
+  margin: 0.35rem 0 0;
+  max-width: 62ch;
+}
+
+.brand-mark {
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.88);
+  padding: 0.35rem;
+}
+
+.config-strip {
+  padding: 0.8rem 1rem;
+  border-radius: 0.75rem;
+  background: #fff8ef;
+  border: 1px solid #f2d4b2;
+}
+
+.config-strip p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.config-strip span {
+  font-weight: 700;
+  color: #7b3f00;
+}
+
+.nav-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  background: #edf3f7;
+  border-radius: 0.75rem;
+  padding: 0.5rem;
+}
+
+.nav-wrap .nav-link {
+  color: #0f3e5b;
+  font-weight: 600;
+}
+
+.nav-wrap .nav-link.active {
+  background: #0f3e5b;
+  color: #ffffff;
+}
+
+.content-card {
+  background: #ffffff;
+  border-radius: 1rem;
+  border: 1px solid #d4e2ec;
+  padding: 1rem;
+  box-shadow: 0 12px 25px rgba(13, 45, 69, 0.08);
+}
+
+.view-section h2 {
+  margin: 0;
+  color: #12324a;
+}
+
+.subtitle {
+  margin: 0.35rem 0 1rem;
+  color: #4f6272;
+}
+
+.status {
+  margin: 0;
+  padding: 1rem;
+}
+
+.status.error {
+  color: #b02a37;
+}
+
+@media (max-width: 700px) {
+  .masthead {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .brand-mark {
+    width: 70px;
+    height: 70px;
+  }
+}
